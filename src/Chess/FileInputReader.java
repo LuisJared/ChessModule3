@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 
 public class FileInputReader 
 {		 
-	private final Pattern CASTLING_VERIFIER = Pattern.compile("(?<kingCastle>[Ee][18]) ([CcGg][18]) (?<rookCastle>[AaHh][18]) ([DdFf][18])");
+//	private final Pattern CASTLING_VERIFIER = Pattern.compile("(?<kingCastle>[Ee][18]) ([CcGg][18]) (?<rookCastle>[AaHh][18]) ([DdFf][18])");
 	private final Pattern PIECE_PLACE_FINDER = Pattern.compile("[\\w]{2}(?<position>[A-Ha-h][1-8])");
-	private final Pattern PIECE_MOVEMENT_CAPTURING = Pattern.compile("(?<startingPosition>[A-Ha-h][1-8]) (?<capturePosition>[A-Ha-h][1-8])(\\*)");
+//	private final Pattern PIECE_MOVEMENT_CAPTURING = Pattern.compile("(?<startingPosition>[A-Ha-h][1-8]) (?<capturePosition>[A-Ha-h][1-8])(\\*)");
 	private final Pattern PIECE_PLACING_VERIFIER = Pattern.compile("(?<pieceType>[KkQqBbNnRrPp])(?<pieceColor>[LlDd])(?<columnPosition>[A-Ha-h])(?<rowPosition>[1-8])");
 	private final Pattern PIECE_MOVEMENT_VERIFIER = Pattern.compile("(?<startingColumn>[A-Ha-h])(?<startingRow>[1-8]) (?<endColumn>[A-Ha-h])(?<endRow>[1-8])");
 	
@@ -40,24 +40,41 @@ public class FileInputReader
 			
 			while(buffer.ready())
 			{						
-				String pieceType = "";
+				String piece = "";
 				String color = "";
 				String placement = "";
 				String line = buffer.readLine();
 
 				Matcher placeVerifier = PIECE_PLACING_VERIFIER.matcher(line);
-				Matcher movementCapture = PIECE_MOVEMENT_CAPTURING.matcher(line);
+//				Matcher movementCapture = PIECE_MOVEMENT_CAPTURING.matcher(line);
 				Matcher movementVerifier = PIECE_MOVEMENT_VERIFIER.matcher(line);
-				Matcher castleMatcher = CASTLING_VERIFIER.matcher(line);
+//				Matcher castleMatcher = CASTLING_VERIFIER.matcher(line);
 				
-				pieceType = pieceType(line);					
-				color = pieceColor(line);
-				placement = piecePosition(line);			
-					
 				if(placeVerifier.matches())
-				{					
-					placePiece(pieceType, color, placement, line);
-				}					
+				{
+					Piece newPiece = new Piece();
+					
+					newPiece = pieceType(line, newPiece);
+					piece = newPiece.getPieceType();
+					color = pieceColor(line, newPiece);
+					placement = piecePosition(line);
+					
+					String pieceType = placeVerifier.group("pieceType");
+					
+					placePiece(piece, color, placement, line);
+					
+					char columnLetter = placeVerifier.group("columnPosition").charAt(0);
+					char rowNumber = placeVerifier.group("rowPosition").charAt(0);
+					
+					int column = columnLetter - 'a';
+					int row = rowNumber - '1';
+					
+					pieceType = (color == "White") ? pieceType.toLowerCase() : pieceType.toUpperCase();
+					
+					newPiece.setPieceType(pieceType);
+					
+					board.addPieceToBoard(newPiece, column, row);
+				}							
 				else if(movementVerifier.matches())
 				{					
 					char startingColumnLetter = movementVerifier.group("startingColumn").charAt(0);
@@ -77,14 +94,14 @@ public class FileInputReader
 					board.printBoard();
 					System.out.println();
 				}
-				else if(movementCapture.matches())
-				{
-					capturePiece(line);
-				}
-				else if(castleMatcher.matches())
-				{
-					notifyCastle(line);
-				}
+//				else if(movementCapture.matches())
+//				{
+//					capturePiece(line);
+//				}
+//				else if(castleMatcher.matches())
+//				{
+//					notifyCastle(line);
+//				}
 				else
 				{
 					System.out.println(line + " is an incorrect input!  Please revise it!");
@@ -118,7 +135,7 @@ public class FileInputReader
 		return endPosition;
 	}
 	
-	private String pieceType(String line) 
+	private Piece pieceType(String line, Piece newPiece) 
 	{
 		String piece = "";
 		
@@ -131,32 +148,39 @@ public class FileInputReader
 			if(pieceType.equals("k"))
 			{
 				piece = "King";
+				newPiece = new King();
 			}
 			else if(pieceType.equals("q"))
 			{
 				piece = "Queen";
+				newPiece = new Queen();
 			}
 			else if(pieceType.equals("b"))
 			{
 				piece = "Bishop";
+				newPiece = new Bishop();
 			}
 			else if(pieceType.equals("n"))
 			{
 				piece = "Knight";
+				newPiece = new Knight();
 			}
 			else if(pieceType.equals("r"))
 			{
 				piece = "Rook";
+				newPiece = new Rook();
 			}
 			else if(pieceType.equals("p"))
 			{
 				piece = "Pawn";
+				newPiece = new Pawn();
 			}
 		}		
-		return piece;
+		newPiece.setPieceType(piece);
+		return newPiece;
 	}
 	
-	private String pieceColor(String line)
+	private String pieceColor(String line, Piece piece)
 	{
 		Matcher placeVerifier = PIECE_PLACING_VERIFIER.matcher(line);
 		
@@ -166,7 +190,7 @@ public class FileInputReader
 		{			
 			color = (placeVerifier.group("pieceColor").equals("l") || placeVerifier.group("pieceColor").equals("L")) ? "White" : "Black";
 		}
-		
+		piece.setPieceColor(color);
 		return color;
 	}
 	
@@ -193,33 +217,33 @@ public class FileInputReader
 		}
 	}
 
-	private void capturePiece(String line)
-	{		
-		Matcher movementCapture = PIECE_MOVEMENT_CAPTURING.matcher(line);
-		
-		if(movementCapture.matches())
-		{
-			System.out.println("The piece at " + movementCapture.group("startingPosition") + " has moved to " + movementCapture.group("capturePosition") + " and captured the piece at " + movementCapture.group("capturePosition"));
-		}
-	}
-	
-	private void movePiece(String line)
-	{
-		Matcher movementVerifier = PIECE_MOVEMENT_VERIFIER.matcher(line);
-		
-		if(movementVerifier.matches())
-		{
-			System.out.println("The piece at " + movementVerifier.group("startingColumn") + movementVerifier.group("startingRow") + " has moved to " + movementVerifier.group("endColumn") + movementVerifier.group("endRow"));
-		}
-	}
-	
-	private void notifyCastle(String line) 
-	{
-		Matcher castleMatcher = CASTLING_VERIFIER.matcher(line);
-		
-		if(castleMatcher.matches())
-		{
-			System.out.println("You have just performed Castling with " + castleMatcher.group("kingCastle") + " and " + castleMatcher.group("rookCastle"));
-		}
-	}
+//	private void capturePiece(String line)
+//	{		
+//		Matcher movementCapture = PIECE_MOVEMENT_CAPTURING.matcher(line);
+//		
+//		if(movementCapture.matches())
+//		{
+//			System.out.println("The piece at " + movementCapture.group("startingPosition") + " has moved to " + movementCapture.group("capturePosition") + " and captured the piece at " + movementCapture.group("capturePosition"));
+//		}
+//	}
+//	
+//	private void movePiece(String line)
+//	{
+//		Matcher movementVerifier = PIECE_MOVEMENT_VERIFIER.matcher(line);
+//		
+//		if(movementVerifier.matches())
+//		{
+//			System.out.println("The piece at " + movementVerifier.group("startingColumn") + movementVerifier.group("startingRow") + " has moved to " + movementVerifier.group("endColumn") + movementVerifier.group("endRow"));
+//		}
+//	}
+//	
+//	private void notifyCastle(String line) 
+//	{
+//		Matcher castleMatcher = CASTLING_VERIFIER.matcher(line);
+//		
+//		if(castleMatcher.matches())
+//		{
+//			System.out.println("You have just performed Castling with " + castleMatcher.group("kingCastle") + " and " + castleMatcher.group("rookCastle"));
+//		}
+//	}
 }

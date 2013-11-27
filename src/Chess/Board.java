@@ -21,118 +21,123 @@ public class Board
 				chessBoard[i][k] = new Square(blankPiece, position);
 			}
 		}
-		
-		addInitialPiecesToBoard();
+//		addInitialPiecesToBoard();
+	}
+	
+	public void addPieceToBoard(Piece piece, int x, int y)
+	{
+		Position position = new Position(x, y);
+		chessBoard[x][y] = new Square(piece, position);
 	}
 	
 	public void addInitialPiecesToBoard()
 	{		
-		int a = 0;
-		int b = 1;
-		int c = 2;
-		int d = 3;
-		int e = 4;
-		int f = 5;
-		int g = 6;
-		int h = 7;
-		
-		Piece leftWhiteRook = new Rook();
-		leftWhiteRook.setPieceType("r");
-		leftWhiteRook.setPieceColor("White");
-		Position leftWhiteRookPosition = new Position(a, 1);
-		
-		Piece rightWhiteRook = new Rook();
-		rightWhiteRook.setPieceType("r");	
-		rightWhiteRook.setPieceColor("White");
-		Position rightWhiteRookPosition = new Position(h, 1);
-		
-		Piece leftWhiteKnight = new Knight();
-		leftWhiteKnight.setPieceType("n");
-		leftWhiteKnight.setPieceColor("White");
-		Position leftWhiteKnightPosition = new Position(b, 1);
-		
-		Piece rightWhiteKnight = new Knight();
-		rightWhiteKnight.setPieceType("n");
-		rightWhiteKnight.setPieceColor("White");
-		Position rightWhiteKnightPosition = new Position(g, 1);
-		
-		Piece leftWhiteBishop = new Bishop();
-		leftWhiteBishop.setPieceType("b");
-		leftWhiteBishop.setPieceColor("White");
-		Position leftWhiteBishopPosition = new Position(c, 1);
-		
-		Piece rightWhiteBishop = new Bishop();
-		rightWhiteBishop.setPieceType("b");
-		rightWhiteBishop.setPieceColor("White");
-		Position rightWhiteBishopPosition = new Position(f, 1);
-		
-		Piece whiteQueen = new Queen();
-		whiteQueen.setPieceType("q");
-		whiteQueen.setPieceColor("White");
-		Position whiteQueenPosition = new Position(d, 1);
-		
-		Piece whiteKing = new King();
-		whiteKing.setPieceType("k");
-		whiteKing.setPieceColor("White");
-		Position whiteKingPosition = new Position(e, 1);
-		
-		Piece leftBlackRook = new Rook();
-		leftBlackRook.setPieceType("R");		
-		leftBlackRook.setPieceColor("Black");
-		Position leftBlackRookPosition = new Position(a, 7);
-		
-		Piece rightBlackRook = new Rook();
-		rightBlackRook.setPieceType("R");	
-		rightBlackRook.setPieceColor("Black");
-		Position rightBlackRookPosition = new Position(h, 7);
-		
-		Piece leftBlackKnight = new Knight();
-		leftBlackKnight.setPieceType("N");
-		leftBlackKnight.setPieceColor("Black");
-		Position leftBlackKnightPosition = new Position(b, 7);
-		
-		Piece rightBlackKnight = new Knight();
-		rightBlackKnight.setPieceType("N");
-		rightBlackKnight.setPieceColor("Black");
-		Position rightBlackKnightPosition = new Position(g, 7);
-		
-		Piece leftBlackBishop = new Bishop();
-		leftBlackBishop.setPieceType("B");
-		leftBlackBishop.setPieceColor("Black");
-		Position leftBlackBishopPosition = new Position(c, 7);
-		
-		Piece rightBlackBishop = new Bishop();
-		rightBlackBishop.setPieceType("B");
-		rightBlackBishop.setPieceColor("Black");
-		Position rightBlackBishopPosition = new Position(f, 7);
-		
-		Piece blackQueen = new Queen();
-		blackQueen.setPieceType("Q");
-		blackQueen.setPieceColor("Black");
-		Position blackQueenPosition = new Position(d, 7);
-		
-		Piece blackKing = new King();
-		blackKing.setPieceType("K");
-		blackKing.setPieceColor("Black");
-		Position blackKingPosition = new Position(e, 7);
-		
-		chessBoard[a][0] = new Square(leftWhiteRook, leftWhiteRookPosition);
-		chessBoard[b][0] = new Square(leftWhiteKnight, leftWhiteKnightPosition);
-		chessBoard[c][0] = new Square(leftWhiteBishop, leftWhiteBishopPosition);
-		chessBoard[d][0] = new Square(whiteQueen, whiteQueenPosition);
-		chessBoard[e][0] = new Square(whiteKing, whiteKingPosition);
-		chessBoard[f][0] = new Square(rightWhiteBishop, rightWhiteBishopPosition);
-		chessBoard[g][0] = new Square(rightWhiteKnight, rightWhiteKnightPosition);
-		chessBoard[h][0] = new Square(rightWhiteRook, rightWhiteRookPosition);
-		
-		chessBoard[a][7] = new Square(leftBlackRook, leftBlackRookPosition);
-		chessBoard[b][7] = new Square(leftBlackKnight, leftBlackKnightPosition);
-		chessBoard[c][7] = new Square(leftBlackBishop, leftBlackBishopPosition);
-		chessBoard[d][7] = new Square(blackQueen, blackQueenPosition);
-		chessBoard[e][7] = new Square(blackKing, blackKingPosition);
-		chessBoard[f][7] = new Square(rightBlackBishop, rightBlackBishopPosition);
-		chessBoard[g][7] = new Square(rightBlackKnight, rightBlackKnightPosition);
-		chessBoard[h][7] = new Square(rightBlackRook, rightBlackRookPosition);
+//		int a = 0;
+//		int b = 1;
+//		int c = 2;
+//		int d = 3;
+//		int e = 4;
+//		int f = 5;
+//		int g = 6;
+//		int h = 7;
+//		
+//		Piece leftWhiteRook = new Rook();
+//		leftWhiteRook.setPieceType("r");
+//		leftWhiteRook.setPieceColor("White");
+//		Position leftWhiteRookPosition = new Position(a, 1);
+//		
+//		Piece rightWhiteRook = new Rook();
+//		rightWhiteRook.setPieceType("r");	
+//		rightWhiteRook.setPieceColor("White");
+//		Position rightWhiteRookPosition = new Position(h, 1);
+//		
+//		Piece leftWhiteKnight = new Knight();
+//		leftWhiteKnight.setPieceType("n");
+//		leftWhiteKnight.setPieceColor("White");
+//		Position leftWhiteKnightPosition = new Position(b, 1);
+//		
+//		Piece rightWhiteKnight = new Knight();
+//		rightWhiteKnight.setPieceType("n");
+//		rightWhiteKnight.setPieceColor("White");
+//		Position rightWhiteKnightPosition = new Position(g, 1);
+//		
+//		Piece leftWhiteBishop = new Bishop();
+//		leftWhiteBishop.setPieceType("b");
+//		leftWhiteBishop.setPieceColor("White");
+//		Position leftWhiteBishopPosition = new Position(c, 1);
+//		
+//		Piece rightWhiteBishop = new Bishop();
+//		rightWhiteBishop.setPieceType("b");
+//		rightWhiteBishop.setPieceColor("White");
+//		Position rightWhiteBishopPosition = new Position(f, 1);
+//		
+//		Piece whiteQueen = new Queen();
+//		whiteQueen.setPieceType("q");
+//		whiteQueen.setPieceColor("White");
+//		Position whiteQueenPosition = new Position(d, 1);
+//		
+//		Piece whiteKing = new King();
+//		whiteKing.setPieceType("k");
+//		whiteKing.setPieceColor("White");
+//		Position whiteKingPosition = new Position(e, 1);
+//		
+//		Piece leftBlackRook = new Rook();
+//		leftBlackRook.setPieceType("R");		
+//		leftBlackRook.setPieceColor("Black");
+//		Position leftBlackRookPosition = new Position(a, 7);
+//		
+//		Piece rightBlackRook = new Rook();
+//		rightBlackRook.setPieceType("R");	
+//		rightBlackRook.setPieceColor("Black");
+//		Position rightBlackRookPosition = new Position(h, 7);
+//		
+//		Piece leftBlackKnight = new Knight();
+//		leftBlackKnight.setPieceType("N");
+//		leftBlackKnight.setPieceColor("Black");
+//		Position leftBlackKnightPosition = new Position(b, 7);
+//		
+//		Piece rightBlackKnight = new Knight();
+//		rightBlackKnight.setPieceType("N");
+//		rightBlackKnight.setPieceColor("Black");
+//		Position rightBlackKnightPosition = new Position(g, 7);
+//		
+//		Piece leftBlackBishop = new Bishop();
+//		leftBlackBishop.setPieceType("B");
+//		leftBlackBishop.setPieceColor("Black");
+//		Position leftBlackBishopPosition = new Position(c, 7);
+//		
+//		Piece rightBlackBishop = new Bishop();
+//		rightBlackBishop.setPieceType("B");
+//		rightBlackBishop.setPieceColor("Black");
+//		Position rightBlackBishopPosition = new Position(f, 7);
+//		
+//		Piece blackQueen = new Queen();
+//		blackQueen.setPieceType("Q");
+//		blackQueen.setPieceColor("Black");
+//		Position blackQueenPosition = new Position(d, 7);
+//		
+//		Piece blackKing = new King();
+//		blackKing.setPieceType("K");
+//		blackKing.setPieceColor("Black");
+//		Position blackKingPosition = new Position(e, 7);
+//		
+//		chessBoard[a][0] = new Square(leftWhiteRook, leftWhiteRookPosition);
+//		chessBoard[b][0] = new Square(leftWhiteKnight, leftWhiteKnightPosition);
+//		chessBoard[c][0] = new Square(leftWhiteBishop, leftWhiteBishopPosition);
+//		chessBoard[d][0] = new Square(whiteQueen, whiteQueenPosition);
+//		chessBoard[e][0] = new Square(whiteKing, whiteKingPosition);
+//		chessBoard[f][0] = new Square(rightWhiteBishop, rightWhiteBishopPosition);
+//		chessBoard[g][0] = new Square(rightWhiteKnight, rightWhiteKnightPosition);
+//		chessBoard[h][0] = new Square(rightWhiteRook, rightWhiteRookPosition);
+//		
+//		chessBoard[a][7] = new Square(leftBlackRook, leftBlackRookPosition);
+//		chessBoard[b][7] = new Square(leftBlackKnight, leftBlackKnightPosition);
+//		chessBoard[c][7] = new Square(leftBlackBishop, leftBlackBishopPosition);
+//		chessBoard[d][7] = new Square(blackQueen, blackQueenPosition);
+//		chessBoard[e][7] = new Square(blackKing, blackKingPosition);
+//		chessBoard[f][7] = new Square(rightBlackBishop, rightBlackBishopPosition);
+//		chessBoard[g][7] = new Square(rightBlackKnight, rightBlackKnightPosition);
+//		chessBoard[h][7] = new Square(rightBlackRook, rightBlackRookPosition);
 	}
 	
 	public void movePieceOnBoard(String command, Position start, Position end)
