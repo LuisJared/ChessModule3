@@ -86,49 +86,29 @@ public class Board
 		int verticleMovement = y2 - y1;
 		int horizontalMovement = x2 - x1;
 		int upRightMovement = verticleMovement - horizontalMovement;		
-		int diagonalMovement = verticleMovement + horizontalMovement;		
+		int diagonalMovement = verticleMovement + horizontalMovement;
+		int mathCheck = 0;
 		
-		if(verticleMovement != 0 && (horizontalMovement == 0))
+		if(verticleMovement != mathCheck && (horizontalMovement == mathCheck))
 		{			
 			moveCompletable = (y2 > y1) ? verticleMovementPathCheck(x1, y1, y2) : verticleMovementPathCheck(x1, y2, y1);
 		}
 		
-		if(horizontalMovement != 0 && (verticleMovement == 0))
+		if(horizontalMovement != mathCheck && (verticleMovement == mathCheck))
 		{
 			moveCompletable = (x2 > x1) ? horizontalMovementPathCheck(y1, x1, x2) : horizontalMovementPathCheck(y1, x2, x1);
 		}
 		
-		if(diagonalMovement == 0)
+		if(diagonalMovement == mathCheck)
 		{
 			moveCompletable = (x2 < x1) && (y2 > y1) ? diagonalMovementPathCheckBottomRightToTopLeft(y1, x1, x2) : diagonalMovementPathCheckBottomRightToTopLeft(y2, x2, x1); 
 		}
 		
-		// up right path
-		if(upRightMovement == 0 && (x2 > x1) && (y2 > y1))
+		if(upRightMovement == mathCheck || (verticleMovement == horizontalMovement))
 		{
-			int y = y1+1;
-			for(int x = x1+1; x < x2; x++, y++)
-			{
-				if(chessBoard[x][y].getPiece().getPieceType().toString() != "-")
-				{
-					moveCompletable = false;
-					break;
-				}
-			}
+			moveCompletable = (x2 > x1) && (y2 > y1) ? diagonalMovementPathCheckBottomLeftToTopRight(y1, x1, x2) : diagonalMovementPathCheckBottomLeftToTopRight(y2, x2, x1);
 		}
-		//down left path
-		if(verticleMovement == horizontalMovement && (x2 < x1) && (y2 < y1))
-		{
-			int y = y1 - 1;
-			for(int x = x1-1; x > x2; x--, y--)
-			{
-				if(chessBoard[x][y].getPiece().getPieceType().toString() != "-")
-				{
-					moveCompletable = false;
-					break;
-				}
-			}
-		}
+		
 		return moveCompletable;
 	}
 	
@@ -136,12 +116,11 @@ public class Board
 	{
 		boolean moveCompletable = true;
 		
-		for(int i = y1+1; i < y2; i++)
+		for(int i = y1+1; moveCompletable && (i < y2); i++)
 		{
 			if(chessBoard[x1][i].getPiece().getPieceType().toString() != "-")
 			{
 				moveCompletable = false;
-				break;
 			}
 		}
 		return moveCompletable;
@@ -151,12 +130,11 @@ public class Board
 	{
 		boolean moveCompletable = true;
 		
-		for(int i = x1+1; i < x2; i++)
+		for(int i = x1+1; moveCompletable && (i < x2); i++)
 		{
 			if(chessBoard[i][y1].getPiece().getPieceType().toString() != "-")
 			{
 				moveCompletable = false;
-				break;
 			}
 		}		
 		return moveCompletable;
@@ -166,15 +144,29 @@ public class Board
 	{
 		boolean moveCompletable = true;
 		int y = y1+1;
-		for(int x = x1-1; x > x2; x--, y++)
+		for(int x = x1-1; moveCompletable && (x > x2); x--, y++)
 		{
 			if(chessBoard[x][y].getPiece().getPieceType().toString() != "-")
 			{
 				moveCompletable = false;
-				break;
 			}
 		}
 		
+		return moveCompletable;
+	}
+	
+	private boolean diagonalMovementPathCheckBottomLeftToTopRight(int y1, int x1, int x2)
+	{
+		boolean moveCompletable = true;
+		
+		int y = y1+1;
+		for(int x = x1+1; moveCompletable && (x < x2); x++, y++)
+		{
+			if(chessBoard[x][y].getPiece().getPieceType().toString() != "-")
+			{
+				moveCompletable = false;
+			}
+		}
 		return moveCompletable;
 	}
 
