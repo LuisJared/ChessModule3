@@ -1,7 +1,12 @@
 package Chess;
 
 public class Rook extends Piece
-{	
+{		
+	public Rook(String pieceType) 
+	{
+		super(pieceType);
+	}
+
 	@Override
 	public boolean validMovement(double x1, double y1, double x2, double y2)
 	{

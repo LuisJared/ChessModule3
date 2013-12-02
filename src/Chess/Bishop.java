@@ -2,6 +2,11 @@ package Chess;
 
 public class Bishop extends Piece
 {
+	public Bishop(String pieceType) 
+	{
+		super(pieceType);
+	}
+
 	private static double DIVIDED_RESULT = 1;
 	
 	@Override

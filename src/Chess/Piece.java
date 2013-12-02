@@ -6,6 +6,11 @@ public class Piece
 	private String pieceColor = "";
 	protected double minBoardSize = 0;
 	protected double maxBoardSize = 8;
+	
+	public Piece(String pieceType)
+	{
+		this.pieceType = pieceType;
+	}
 
 	public String getPieceType() 
 	{

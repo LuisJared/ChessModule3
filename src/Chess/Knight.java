@@ -2,6 +2,11 @@ package Chess;
 
 public class Knight extends Piece
 {	
+	public Knight(String pieceType) 
+	{
+		super(pieceType);
+	}
+
 	private static double ONE = 1;
 	private static double TWO = 2;
 	

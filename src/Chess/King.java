@@ -1,7 +1,12 @@
 package Chess;
 
 public class King extends Piece
-{	
+{
+	public King(String pieceType) 
+	{
+		super(pieceType);
+	}
+
 	private static double KING_MOVEMENT_RESTRICTION = 1;
 	
 	@Override

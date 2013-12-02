@@ -52,7 +52,7 @@ public class FileInputReader
 				
 				if(placeVerifier.matches())
 				{
-					Piece newPiece = new Piece();
+					Piece newPiece = new Piece(piece);
 					
 					newPiece = pieceType(line, newPiece);
 					piece = newPiece.getPieceType();
@@ -147,35 +147,34 @@ public class FileInputReader
 			if(pieceType.equals("k"))
 			{
 				piece = "King";
-				newPiece = new King();
+				newPiece = new King(piece);
 			}
 			else if(pieceType.equals("q"))
 			{
 				piece = "Queen";
-				newPiece = new Queen();
+				newPiece = new Queen(piece);
 			}
 			else if(pieceType.equals("b"))
 			{
 				piece = "Bishop";
-				newPiece = new Bishop();
+				newPiece = new Bishop(piece);
 			}
 			else if(pieceType.equals("n"))
 			{
 				piece = "Knight";
-				newPiece = new Knight();
+				newPiece = new Knight(piece);
 			}
 			else if(pieceType.equals("r"))
 			{
 				piece = "Rook";
-				newPiece = new Rook();
+				newPiece = new Rook(piece);
 			}
 			else if(pieceType.equals("p"))
 			{
 				piece = "Pawn";
-				newPiece = new Pawn();
+				newPiece = new Pawn(piece);
 			}
-		}		
-		newPiece.setPieceType(piece);
+		}
 		return newPiece;
 	}
 	
