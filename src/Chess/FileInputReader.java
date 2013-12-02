@@ -91,8 +91,6 @@ public class FileInputReader
 					Position endPosition = makeEndMovementPosition(endColumn, endRow);
 					
 					board.movePieceOnBoard(line, startingPosition, endPosition);
-					board.printBoard();
-					System.out.println();
 				}
 //				else if(movementCapture.matches())
 //				{
@@ -104,6 +102,7 @@ public class FileInputReader
 //				}
 				else
 				{
+					System.out.println();
 					System.out.println(line + " is an incorrect input!  Please revise it!");
 				}
 			}
